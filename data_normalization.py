@@ -82,7 +82,7 @@ df2023 = df2023.drop('Pedra 23', axis=1)
 # Renomear colunas
 df2022 = df2022.rename(columns={'Ano nasc': 'Ano Nasc', 'Idade 22': 'Idade'})
 df2023 = df2023.rename(columns={'Nome Anonimizado': 'Nome', 'Pedra 2023': 'Pedra 23'})
-df2024 = df2024.rename(columns={'Nome Anonimizado': 'Nome'})
+df2024 = df2024.rename(columns={'Nome Anonimizado': 'Nome', 'Pedra 2024': 'Pedra 24', 'INDE 2024': 'INDE 24'})
 
 # Data de Nasc
 df2022['Data de Nasc'] = pd.Series([None] * len(df2022), dtype='datetime64[ns]')
@@ -114,22 +114,59 @@ df2023['Ano ingresso'] = df2023['Ano ingresso'].astype('Int64')
 df2024['Ano ingresso'] = pd.to_numeric(df2024['Ano ingresso'], errors='coerce')
 df2024['Ano ingresso'] = df2024['Ano ingresso'].astype('Int64')
 
+# INDE 22
+df2022['INDE 22'] = pd.to_numeric(df2022['INDE 22'], errors='coerce')
+df2022['INDE 22'] = df2022['INDE 22'].astype(float)
+
+df2023['INDE 22'] = pd.to_numeric(df2023['INDE 22'], errors='coerce')
+df2023['INDE 22'] = df2023['INDE 22'].astype(float)
+
+df2024['INDE 22'] = pd.to_numeric(df2024['INDE 22'], errors='coerce')
+df2024['INDE 22'] = df2024['INDE 22'].astype(float)
+
 # Pedra 23
 df2022['Pedra 23'] = None
 df2022['Pedra 23'] = df2022['Pedra 23'].astype(str).replace('None', None)
+
+# INDE 23
+df2022['INDE 23'] = None
+df2022['INDE 23'] = df2022['INDE 23'].astype(float)
+
+df2023['INDE 23'] = pd.to_numeric(df2023['INDE 23'], errors='coerce')
+df2023['INDE 23'] = df2023['INDE 23'].astype(float)
+
+df2024['INDE 23'] = pd.to_numeric(df2024['INDE 23'], errors='coerce')
+df2024['INDE 23'] = df2024['INDE 23'].astype(float)
+
+# Pedra 24
+df2022['Pedra 24'] = None
+df2022['Pedra 24'] = df2022['Pedra 24'].astype(str).replace('None', None)
+
+df2023['Pedra 24'] = None
+df2023['Pedra 24'] = df2023['Pedra 24'].astype(str).replace('None', None)
+
+# INDE 2024
+df2022['INDE 24'] = None
+df2022['INDE 24'] = df2022['INDE 24'].astype(float)
+
+df2023['INDE 24'] = None
+df2023['INDE 24'] = df2023['INDE 24'].astype(float)
+
+df2024['INDE 24'] = pd.to_numeric(df2024['INDE 24'], errors='coerce')
+df2024['INDE 24'] = df2024['INDE 24'].astype(float)
 
 # Merge
 print("\n" + "="*50)
 print("Merge")
 print("="*50)
 
-columns_2022 = df2022[['RA', 'Fase', 'Turma', 'Nome', 'Data de Nasc', 'Ano Nasc', 'Idade', 'Gênero', 'Ano ingresso', 'Instituição de ensino', 'Pedra 20', 'Pedra 21', 'Pedra 22', 'Pedra 23']].copy()
-columns_2023 = df2023[['RA', 'Fase', 'Turma', 'Nome', 'Data de Nasc', 'Ano Nasc', 'Idade', 'Gênero', 'Ano ingresso', 'Instituição de ensino', 'Pedra 20', 'Pedra 21', 'Pedra 22', 'Pedra 23']].copy()
-columns_2024 = df2024[['RA', 'Fase', 'Turma', 'Nome', 'Data de Nasc', 'Ano Nasc', 'Idade', 'Gênero', 'Ano ingresso', 'Instituição de ensino', 'Pedra 20', 'Pedra 21', 'Pedra 22', 'Pedra 23']].copy()
+columns_2022 = df2022[['RA', 'Fase', 'Turma', 'Nome', 'Data de Nasc', 'Ano Nasc', 'Idade', 'Gênero', 'Ano ingresso', 'Instituição de ensino', 'Pedra 20', 'Pedra 21', 'Pedra 22', 'INDE 22', 'Pedra 23', 'INDE 23', 'Pedra 24', 'INDE 24']].copy()
+columns_2023 = df2023[['RA', 'Fase', 'Turma', 'Nome', 'Data de Nasc', 'Ano Nasc', 'Idade', 'Gênero', 'Ano ingresso', 'Instituição de ensino', 'Pedra 20', 'Pedra 21', 'Pedra 22', 'INDE 22', 'Pedra 23', 'INDE 23', 'Pedra 24', 'INDE 24']].copy()
+columns_2024 = df2024[['RA', 'Fase', 'Turma', 'Nome', 'Data de Nasc', 'Ano Nasc', 'Idade', 'Gênero', 'Ano ingresso', 'Instituição de ensino', 'Pedra 20', 'Pedra 21', 'Pedra 22', 'INDE 22', 'Pedra 23', 'INDE 23', 'Pedra 24', 'INDE 24']].copy()
 
 df = pd.concat([columns_2022, columns_2023, columns_2024], ignore_index=True)
 
-cols_string = ['RA', 'Fase', 'Turma', 'Nome', 'Gênero', 'Instituição de ensino', 'Pedra 20', 'Pedra 21', 'Pedra 22', 'Pedra 23']
+cols_string = ['RA', 'Fase', 'Turma', 'Nome', 'Gênero', 'Instituição de ensino', 'Pedra 20', 'Pedra 21', 'Pedra 22', 'Pedra 23', 'Pedra 24']
 df[cols_string] = df[cols_string].fillna('null').astype(str)
 for col in cols_string:
     df[col] = df[col].apply(normalize_string)
@@ -139,7 +176,10 @@ df['Data de Nasc'] = df['Data de Nasc'].dt.normalize()
 
 df['Ano Nasc'] = pd.to_numeric(df['Ano Nasc'], errors='coerce').astype('Int64')
 df['Idade'] = pd.to_numeric(df['Idade'], errors='coerce').astype('Int64')
-df['Ano ingresso'] = pd.to_numeric(df['Ano ingresso'], errors='coerce').astype('Int64') 
+df['Ano ingresso'] = pd.to_numeric(df['Ano ingresso'], errors='coerce').astype('Int64')
+df['INDE 22'] = pd.to_numeric(df['INDE 22'], errors='coerce').astype('float')
+df['INDE 23'] = pd.to_numeric(df['INDE 23'], errors='coerce').astype('float')
+df['INDE 24'] = pd.to_numeric(df['INDE 24'], errors='coerce').astype('float')
 
 # Exibe os primeiros RAs
 print("\nPrimeiros 20 RAs do novo DataFrame:")
