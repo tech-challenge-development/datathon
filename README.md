@@ -48,7 +48,7 @@ pip install -r requirements.txt
 Após ativar o ambiente virtual, execute o comando abaixo na pasta raiz do projeto:
 
 ```bash
-streamlit run home_datathon.py
+streamlit run streamlit/home_datathon.py
 ```
 
 O navegador abrirá automaticamente no endereço local do Streamlit.
