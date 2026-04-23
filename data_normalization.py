@@ -80,9 +80,26 @@ def normalize_string(text):
 df2023 = df2023.drop('Pedra 23', axis=1)
 
 # Renomear colunas
-df2022 = df2022.rename(columns={'Ano nasc': 'Ano Nasc', 'Idade 22': 'Idade', 'Matem': 'Mat', 'Portug': 'Por', 'Inglês': 'Ing'})
-df2023 = df2023.rename(columns={'Nome Anonimizado': 'Nome', 'Pedra 2023': 'Pedra 23'})
-df2024 = df2024.rename(columns={'Nome Anonimizado': 'Nome', 'Pedra 2024': 'Pedra 24', 'INDE 2024': 'INDE 24'})
+df2022 = df2022.rename(columns={
+    'Ano nasc': 'Ano Nasc',
+    'Idade 22': 'Idade', 
+    'Matem': 'Mat',
+    'Portug': 'Por',
+    'Inglês': 'Ing',
+    'Fase ideal': 'Fase Ideal',
+    'Defas': 'Defasagem'
+})
+
+df2023 = df2023.rename(columns={
+    'Nome Anonimizado': 'Nome',
+    'Pedra 2023': 'Pedra 23'
+})
+
+df2024 = df2024.rename(columns={
+    'Nome Anonimizado': 'Nome',
+    'Pedra 2024': 'Pedra 24',
+    'INDE 2024': 'INDE 24'
+})
 
 # Data de Nasc
 df2022['Data de Nasc'] = pd.Series([None] * len(df2022), dtype='datetime64[ns]')
@@ -297,30 +314,96 @@ df2023['Ing'] = df2023['Ing'].astype(float)
 df2024['Ing'] = pd.to_numeric(df2024['Ing'], errors='coerce')
 df2024['Ing'] = df2024['Ing'].astype(float)
 
+# IPV
+df2022['IPV'] = pd.to_numeric(df2022['IPV'], errors='coerce')
+df2022['IPV'] = df2022['IPV'].astype(float)
+
+df2023['IPV'] = pd.to_numeric(df2023['IPV'], errors='coerce')
+df2023['IPV'] = df2023['IPV'].astype(float)
+
+df2024['IPV'] = pd.to_numeric(df2024['IPV'], errors='coerce')
+df2024['IPV'] = df2024['IPV'].astype(float)
+
+# IAN
+df2022['IAN'] = pd.to_numeric(df2022['IAN'], errors='coerce')
+df2022['IAN'] = df2022['IAN'].astype(float)
+
+df2023['IAN'] = pd.to_numeric(df2023['IAN'], errors='coerce')
+df2023['IAN'] = df2023['IAN'].astype(float)
+
+df2024['IAN'] = pd.to_numeric(df2024['IAN'], errors='coerce')
+df2024['IAN'] = df2024['IAN'].astype(float)
+
+# Defasagem
+df2022['Defasagem'] = pd.to_numeric(df2022['Defasagem'], errors='coerce')
+df2022['Defasagem'] = df2022['Defasagem'].astype('Int64')
+
+df2023['Defasagem'] = pd.to_numeric(df2023['Defasagem'], errors='coerce')
+df2023['Defasagem'] = df2023['Defasagem'].astype('Int64')
+
+df2024['Defasagem'] = pd.to_numeric(df2024['Defasagem'], errors='coerce')
+df2024['Defasagem'] = df2024['Defasagem'].astype('Int64')
+
+# Escola
+df2022['Escola'] = None
+df2022['Escola'] = df2022['Escola'].astype(str).replace('None', None)
+
+df2023['Escola'] = None
+df2023['Escola'] = df2023['Escola'].astype(str).replace('None', None)
+
+# Ativo/ Inativo
+df2022['Ativo/ Inativo'] = None
+df2022['Ativo/ Inativo'] = df2022['Ativo/ Inativo'].astype(str).replace('None', None)
+
+df2023['Ativo/ Inativo'] = None
+df2023['Ativo/ Inativo'] = df2023['Ativo/ Inativo'].astype(str).replace('None', None)
+
+# Origem
+df2022['Origem'] = 'PEDE2022'
+df2022['Origem'] = df2022['Origem'].astype(str).replace('None', None)
+
+df2023['Origem'] = 'PEDE2023'
+df2023['Origem'] = df2023['Origem'].astype(str).replace('None', None)
+
+df2024['Origem'] = 'PEDE2024'
+df2024['Origem'] = df2024['Origem'].astype(str).replace('None', None)
+
 # Merge
 print("\n" + "="*50)
 print("Merge")
 print("="*50)
 
-columns_2022 = df2022[['RA', 'Fase', 'Turma', 'Nome', 'Data de Nasc', 'Ano Nasc', 'Idade', 'Gênero', 'Ano ingresso', 'Instituição de ensino', 
-'Pedra 20', 'Pedra 21', 'Pedra 22', 'INDE 22', 'Pedra 23', 'INDE 23', 'Pedra 24', 'INDE 24', 'Cg', 'Cf', 'Ct', 'Nº Av', 'Avaliador1', 'Rec Av1', 
-'Avaliador2', 'Rec Av2', 'Avaliador3', 'Rec Av3', 'Avaliador4', 'Rec Av4', 'Avaliador5', 'Avaliador6', 'IAA', 'IEG', 'IPS', 'IPP', 'Rec Psicologia',
-'IDA', 'Mat', 'Por', 'Ing', 'Indicado', 'Atingiu PV']].copy()
+columns_2022 = df2022[['RA', 'Fase', 'Turma', 'Nome', 'Data de Nasc', 'Ano Nasc', 'Idade', 'Gênero',
+'Ano ingresso', 'Instituição de ensino', 'Pedra 20', 'Pedra 21', 'Pedra 22', 'INDE 22', 'Pedra 23',
+'INDE 23', 'Pedra 24', 'INDE 24', 'Cg', 'Cf', 'Ct', 'Nº Av', 'Avaliador1', 'Rec Av1', 'Avaliador2',
+'Rec Av2', 'Avaliador3', 'Rec Av3', 'Avaliador4', 'Rec Av4', 'Avaliador5', 'Avaliador6', 'IAA', 'IEG',
+'IPS', 'IPP', 'Rec Psicologia', 'IDA', 'Mat', 'Por', 'Ing', 'Indicado', 'Atingiu PV', 'IPV', 'IAN',
+'Fase Ideal', 'Defasagem', 'Destaque IEG', 'Destaque IDA', 'Destaque IPV', 'Escola', 'Ativo/ Inativo',
+'Origem']].copy()
 
-columns_2023 = df2023[['RA', 'Fase', 'Turma', 'Nome', 'Data de Nasc', 'Ano Nasc', 'Idade', 'Gênero', 'Ano ingresso', 'Instituição de ensino', 
-'Pedra 20', 'Pedra 21', 'Pedra 22', 'INDE 22', 'Pedra 23', 'INDE 23', 'Pedra 24', 'INDE 24', 'Cg', 'Cf', 'Ct', 'Nº Av', 'Avaliador1', 'Rec Av1', 
-'Avaliador2', 'Rec Av2', 'Avaliador3', 'Rec Av3', 'Avaliador4', 'Rec Av4', 'Avaliador5', 'Avaliador6', 'IAA', 'IEG', 'IPS', 'IPP', 'Rec Psicologia',
-'IDA', 'Mat', 'Por', 'Ing', 'Indicado', 'Atingiu PV']].copy()
+columns_2023 = df2023[['RA', 'Fase', 'Turma', 'Nome', 'Data de Nasc', 'Ano Nasc', 'Idade', 'Gênero',
+'Ano ingresso', 'Instituição de ensino', 'Pedra 20', 'Pedra 21', 'Pedra 22', 'INDE 22', 'Pedra 23',
+'INDE 23', 'Pedra 24', 'INDE 24', 'Cg', 'Cf', 'Ct', 'Nº Av', 'Avaliador1', 'Rec Av1', 'Avaliador2',
+'Rec Av2', 'Avaliador3', 'Rec Av3', 'Avaliador4', 'Rec Av4', 'Avaliador5', 'Avaliador6', 'IAA', 'IEG',
+'IPS', 'IPP', 'Rec Psicologia', 'IDA', 'Mat', 'Por', 'Ing', 'Indicado', 'Atingiu PV', 'IPV', 'IAN',
+'Fase Ideal', 'Defasagem', 'Destaque IEG', 'Destaque IDA', 'Destaque IPV', 'Escola', 'Ativo/ Inativo',
+'Origem']].copy()
 
-columns_2024 = df2024[['RA', 'Fase', 'Turma', 'Nome', 'Data de Nasc', 'Ano Nasc', 'Idade', 'Gênero', 'Ano ingresso', 'Instituição de ensino', 
-'Pedra 20', 'Pedra 21', 'Pedra 22', 'INDE 22', 'Pedra 23', 'INDE 23', 'Pedra 24', 'INDE 24', 'Cg', 'Cf', 'Ct', 'Nº Av', 'Avaliador1', 'Rec Av1', 
-'Avaliador2', 'Rec Av2', 'Avaliador3', 'Rec Av3', 'Avaliador4', 'Rec Av4', 'Avaliador5', 'Avaliador6', 'IAA', 'IEG', 'IPS', 'IPP', 'Rec Psicologia',
-'IDA', 'Mat', 'Por', 'Ing', 'Indicado', 'Atingiu PV']].copy()
+columns_2024 = df2024[['RA', 'Fase', 'Turma', 'Nome', 'Data de Nasc', 'Ano Nasc', 'Idade', 'Gênero',
+'Ano ingresso', 'Instituição de ensino', 'Pedra 20', 'Pedra 21', 'Pedra 22', 'INDE 22', 'Pedra 23',
+'INDE 23', 'Pedra 24', 'INDE 24', 'Cg', 'Cf', 'Ct', 'Nº Av', 'Avaliador1', 'Rec Av1', 'Avaliador2',
+'Rec Av2', 'Avaliador3', 'Rec Av3', 'Avaliador4', 'Rec Av4', 'Avaliador5', 'Avaliador6', 'IAA', 'IEG',
+'IPS', 'IPP', 'Rec Psicologia', 'IDA', 'Mat', 'Por', 'Ing', 'Indicado', 'Atingiu PV', 'IPV', 'IAN',
+'Fase Ideal', 'Defasagem', 'Destaque IEG', 'Destaque IDA', 'Destaque IPV', 'Escola', 'Ativo/ Inativo',
+'Origem']].copy()
 
 df = pd.concat([columns_2022, columns_2023, columns_2024], ignore_index=True)
 
-cols_string = ['RA', 'Fase', 'Turma', 'Nome', 'Gênero', 'Instituição de ensino', 'Pedra 20', 'Pedra 21', 'Pedra 22', 'Pedra 23', 'Pedra 24', 'Avaliador1', 
-'Rec Av1', 'Avaliador2', 'Rec Av2', 'Avaliador3', 'Rec Av3', 'Avaliador4', 'Rec Av4', 'Avaliador5', 'Avaliador6', 'Rec Psicologia', 'Indicado', 'Atingiu PV']
+cols_string = ['RA', 'Fase', 'Turma', 'Nome', 'Gênero', 'Instituição de ensino', 'Pedra 20',
+'Pedra 21', 'Pedra 22', 'Pedra 23', 'Pedra 24', 'Avaliador1', 'Rec Av1', 'Avaliador2', 'Rec Av2',
+'Avaliador3', 'Rec Av3', 'Avaliador4', 'Rec Av4', 'Avaliador5', 'Avaliador6', 'Rec Psicologia',
+'Indicado', 'Atingiu PV', 'Fase Ideal', 'Destaque IEG', 'Destaque IDA', 'Destaque IPV', 'Escola',
+'Ativo/ Inativo', 'Origem']
 df[cols_string] = df[cols_string].fillna('null').astype(str)
 for col in cols_string:
     df[col] = df[col].apply(normalize_string)
@@ -331,13 +414,15 @@ df['Data de Nasc'] = df['Data de Nasc'].dt.normalize()
 df['Ano Nasc'] = pd.to_numeric(df['Ano Nasc'], errors='coerce').astype('Int64')
 df['Idade'] = pd.to_numeric(df['Idade'], errors='coerce').astype('Int64')
 df['Ano ingresso'] = pd.to_numeric(df['Ano ingresso'], errors='coerce').astype('Int64')
+df['Cf'] = pd.to_numeric(df['Cf'], errors='coerce').astype('Int64')
+df['Ct'] = pd.to_numeric(df['Ct'], errors='coerce').astype('Int64')
+df['Nº Av'] = pd.to_numeric(df['Nº Av'], errors='coerce').astype('Int64')
+df['Defasagem'] = pd.to_numeric(df['Defasagem'], errors='coerce').astype('Int64')
+
 df['INDE 22'] = pd.to_numeric(df['INDE 22'], errors='coerce').astype(float)
 df['INDE 23'] = pd.to_numeric(df['INDE 23'], errors='coerce').astype(float)
 df['INDE 24'] = pd.to_numeric(df['INDE 24'], errors='coerce').astype(float)
 df['Cg'] = pd.to_numeric(df['Cg'], errors='coerce').astype(float)
-df['Cf'] = pd.to_numeric(df['Cf'], errors='coerce').astype('Int64')
-df['Ct'] = pd.to_numeric(df['Ct'], errors='coerce').astype('Int64')
-df['Nº Av'] = pd.to_numeric(df['Nº Av'], errors='coerce').astype('Int64')
 df['IAA'] = pd.to_numeric(df['IAA'], errors='coerce').astype(float)
 df['IEG'] = pd.to_numeric(df['IEG'], errors='coerce').astype(float)
 df['IPS'] = pd.to_numeric(df['IPS'], errors='coerce').astype(float)
@@ -346,6 +431,8 @@ df['IDA'] = pd.to_numeric(df['IDA'], errors='coerce').astype(float)
 df['Mat'] = pd.to_numeric(df['Mat'], errors='coerce').astype(float)
 df['Por'] = pd.to_numeric(df['Por'], errors='coerce').astype(float)
 df['Ing'] = pd.to_numeric(df['Ing'], errors='coerce').astype(float)
+df['IPV'] = pd.to_numeric(df['IPV'], errors='coerce').astype(float)
+df['IAN'] = pd.to_numeric(df['IAN'], errors='coerce').astype(float)
 
 # Exibe os primeiros RAs
 print("\nPrimeiros 20 RAs do novo DataFrame:")
@@ -356,3 +443,4 @@ print(df.tail(20))
 
 print("\nTipos de dados:")
 print(df.dtypes)
+
