@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 
 file_path = 'BASE DE DADOS PEDE 2024 - DATATHON.xlsx'
 
@@ -47,9 +48,9 @@ def verify_structure(dfs_dict):
             mismatches.append((col, types))
             
     if not mismatches:
-        print("✅ Todas as colunas comuns possuem os mesmos tipos de dados.")
+        print("OK: Todas as colunas comuns possuem os mesmos tipos de dados.")
     else:
-        print("⚠️ Divergências de tipos encontradas:")
+        print("AVISO: Divergencias de tipos encontradas:")
         for col, types in mismatches:
             print(f"  - Coluna '{col}': {types}")
 
@@ -61,25 +62,33 @@ dfs = {
 
 verify_structure(dfs)
 
+# --- Funções para a normalização dos dados ---
 def normalize_string(text):
-    if text is None or text == '':
+    if text is None:
         return None
     
+    # Converte para maiúsculo
     text = text.upper()
     
+    # Troca ';' por ' '
+    text = text.replace(';', ' ')
+
+    # Remove espaços duplos e transforma em espaços simples
     text = " ".join(text.split())
     
+    # Remove espaços nas extremidades (trim)
     text = text.strip()
 
-    if text is None or text == '':
+    # Verificação final para garantir que não restou uma string vazia
+    if text == '':
         return None
 
     return text
 
-# Remover colunas
+# --- Remover colunas ---
 df2023 = df2023.drop('Pedra 23', axis=1)
 
-# Renomear colunas
+# --- Renomear colunas ---
 df2022 = df2022.rename(columns={
     'Ano nasc': 'Ano Nasc',
     'Idade 22': 'Idade', 
@@ -101,6 +110,7 @@ df2024 = df2024.rename(columns={
     'INDE 2024': 'INDE 24'
 })
 
+# --- Tipagem e preenchimento de dados ausentes ---
 # Data de Nasc
 df2022['Data de Nasc'] = pd.Series([None] * len(df2022), dtype='datetime64[ns]')
 
@@ -368,7 +378,7 @@ df2023['Origem'] = df2023['Origem'].astype(str).replace('None', None)
 df2024['Origem'] = 'PEDE2024'
 df2024['Origem'] = df2024['Origem'].astype(str).replace('None', None)
 
-# Merge
+# --- Unir os DataFrames ---
 print("\n" + "="*50)
 print("Merge")
 print("="*50)
@@ -434,13 +444,23 @@ df['Ing'] = pd.to_numeric(df['Ing'], errors='coerce').astype(float)
 df['IPV'] = pd.to_numeric(df['IPV'], errors='coerce').astype(float)
 df['IAN'] = pd.to_numeric(df['IAN'], errors='coerce').astype(float)
 
-# Exibe os primeiros RAs
+# --- Exibe os primeiros RAs ---
 print("\nPrimeiros 20 RAs do novo DataFrame:")
 print(df.head(20))
 
 print("\nÚltimos 20 RAs do novo DataFrame:")
 print(df.tail(20))
 
+# --- Tipos de dados ---
 print("\nTipos de dados:")
 print(df.dtypes)
 
+# --- Exportação dos Dados ---
+output_file = 'BASE DE DADOS PEDE 2024 - DATATHON - NORMALIZADA.txt'
+
+if os.path.exists(output_file):
+    os.remove(output_file)
+    print(f"\nArquivo '{output_file}' existente removido.")
+
+df.to_csv(output_file, sep=';', index=False, encoding='utf-8')
+print(f"Arquivo '{output_file}' criado com sucesso.")
