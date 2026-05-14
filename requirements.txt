@@ -8,5 +8,4 @@ matplotlib
 seaborn
 plotly
 pillow
-tensorflow
 scikeras
