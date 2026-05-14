@@ -6,7 +6,3 @@ scikit-learn
 numpy
 matplotlib
 seaborn
-plotly
-pillow
-tensorflow
-scikeras
